@@ -113,7 +113,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "agi_ds_rawlayer_parquet",
+									"referenceName": "agi_ds_rawlayer_parquet_tbxact_daily",
 									"type": "DatasetReference"
 								}
 							]

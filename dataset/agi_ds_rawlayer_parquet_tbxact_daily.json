@@ -1,5 +1,5 @@
 {
-	"name": "agi_ds_rawlayer_parquet",
+	"name": "agi_ds_rawlayer_parquet_tbxact_daily",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_LS",
@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"folderPath": "tbxact/daily",
 				"fileSystem": "rawlayer"
 			},
 			"compressionCodec": "snappy"
