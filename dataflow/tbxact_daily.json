@@ -1,0 +1,69 @@
+{
+	"name": "tbxact_daily",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "agi_ds_rawlayer_parquet_tbxact_daily",
+						"type": "DatasetReference"
+					},
+					"name": "daily"
+				},
+				{
+					"dataset": {
+						"referenceName": "agi_ds_rawlayer_parquet_tbxact_weekly",
+						"type": "DatasetReference"
+					},
+					"name": "weekly"
+				},
+				{
+					"dataset": {
+						"referenceName": "agi_ds_azure_sql_refemr",
+						"type": "DatasetReference"
+					},
+					"name": "refemerald"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "dcdaily"
+				},
+				{
+					"name": "dcweekly"
+				},
+				{
+					"name": "union"
+				},
+				{
+					"name": "join"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> daily",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> weekly",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select * from ref_emerald where is_deleted =0',",
+				"     format: 'query') ~> refemerald",
+				"daily derive(frequency = \"daily\") ~> dcdaily",
+				"weekly derive(frequency = \"weekly\") ~> dcweekly",
+				"dcdaily, dcweekly union(byName: true)~> union",
+				"union, refemerald join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join"
+			]
+		}
+	}
+}
