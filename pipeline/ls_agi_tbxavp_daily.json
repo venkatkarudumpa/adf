@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "agi_ds_rawlayer_parquet_tbxavp_daily",
+						"referenceName": "agi_ds_tbxavp_daily",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -27,7 +27,7 @@
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
-						"type": "ParquetReadSettings"
+						"type": "DelimitedTextReadSettings"
 					}
 				}
 			},
