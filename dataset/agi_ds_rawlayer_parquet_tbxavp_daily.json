@@ -1,0 +1,20 @@
+{
+	"name": "agi_ds_rawlayer_parquet_tbxavp_daily",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "tbxavp/daily",
+				"fileSystem": "rawlayer"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
